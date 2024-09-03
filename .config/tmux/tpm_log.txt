@@ -1,0 +1,87 @@
+[2024-08-11 00:23:26.883]	 List of discovered tpm plugins: <leader><C-s> tmux-plugins/tmux-cpu session copy keybindding easily theme
+[2024-08-11 00:23:26.913]	 Invoking /Users/johnson/.config/tmux/plugins/tpm/bin/install_plugins
+[2024-08-11 00:23:27.001]	 Installing "<leader><C-s>"
+[2024-08-11 00:23:27.002]	 Installing "tmux-cpu"
+[2024-08-11 00:23:27.002]	 Installing "copy"
+[2024-08-11 00:23:27.002]	 Installing "session"
+[2024-08-11 00:23:27.003]	 Installing "keybindding"
+[2024-08-11 00:23:27.005]	 Installing "easily"
+[2024-08-11 00:23:27.005]	 Installing "theme"
+[2024-08-11 00:23:27.652]	   "keybindding" download fail
+[2024-08-11 00:23:28.020]	   "easily" download fail
+[2024-08-11 00:23:28.774]	   "copy" download fail
+[2024-08-11 00:23:28.815]	   "<leader><C-s>" download fail
+[2024-08-11 00:23:29.014]	   "session" download fail
+[2024-08-11 00:23:29.086]	   "theme" download fail
+[2024-08-11 00:23:31.084]	   "tmux-cpu" download success
+[2024-08-11 00:23:31.110]	 Done.
+
+[2024-08-11 08:57:16.299]	 List of discovered tpm plugins: <leader><C-s> tmux-plugins/tmux-cpu session copy keybindding easily theme
+[2024-08-11 08:57:16.335]	 Invoking /Users/johnson/.config/tmux/plugins/tpm/bin/install_plugins
+[2024-08-11 08:57:16.492]	 Installing "<leader><C-s>"
+[2024-08-11 08:57:16.496]	 Installing "session"
+[2024-08-11 08:57:16.498]	 Installing "copy"
+[2024-08-11 08:57:16.499]	 Installing "keybindding"
+[2024-08-11 08:57:16.502]	 Installing "easily"
+[2024-08-11 08:57:16.504]	 Installing "theme"
+[2024-08-11 08:57:16.526]	 Already installed "tmux-cpu"
+[2024-08-11 08:57:17.098]	   "session" download fail
+[2024-08-11 08:57:17.163]	   "<leader><C-s>" download fail
+[2024-08-11 08:57:17.165]	   "copy" download fail
+[2024-08-11 08:57:17.168]	   "easily" download fail
+[2024-08-11 08:57:17.175]	   "keybindding" download fail
+[2024-08-11 08:57:17.184]	   "theme" download fail
+[2024-08-11 08:57:17.217]	 Invoking /Users/johnson/.config/tmux/plugins/tpm/bin/update_plugins all
+[2024-08-11 08:57:17.267]	 Updating all plugins!
+[2024-08-11 08:57:17.267]	 
+[2024-08-11 08:57:18.748]	   "tmux-cpu" update success
+[2024-08-11 08:57:18.753]	     | Already up to date.
+[2024-08-11 08:57:18.783]	 Invoking /Users/johnson/.config/tmux/plugins/tpm/bin/clean_plugins all
+[2024-08-11 08:57:18.902]	 Done.
+
+[2024-08-11 09:04:19.312]	 List of discovered tpm plugins: <leader><C-s> tmux-plugins/tmux-cpu session copy keybindding easily theme
+[2024-08-11 09:04:19.341]	 Invoking /Users/johnson/.config/tmux/plugins/tpm/bin/install_plugins
+[2024-08-11 09:04:19.436]	 Installing "session"
+[2024-08-11 09:04:19.438]	 Installing "<leader><C-s>"
+[2024-08-11 09:04:19.438]	 Installing "copy"
+[2024-08-11 09:04:19.438]	 Installing "keybindding"
+[2024-08-11 09:04:19.438]	 Installing "easily"
+[2024-08-11 09:04:19.439]	 Installing "theme"
+[2024-08-11 09:04:19.467]	 Already installed "tmux-cpu"
+[2024-08-11 09:04:20.072]	   "keybindding" download fail
+[2024-08-11 09:04:20.093]	   "session" download fail
+[2024-08-11 09:04:20.093]	   "easily" download fail
+[2024-08-11 09:04:20.093]	   "theme" download fail
+[2024-08-11 09:04:20.115]	   "copy" download fail
+[2024-08-11 09:04:20.142]	   "<leader><C-s>" download fail
+[2024-08-11 09:04:20.177]	 Invoking /Users/johnson/.config/tmux/plugins/tpm/bin/update_plugins all
+[2024-08-11 09:04:20.226]	 Updating all plugins!
+[2024-08-11 09:04:20.227]	 
+[2024-08-11 09:04:21.548]	   "tmux-cpu" update success
+[2024-08-11 09:04:21.553]	     | Already up to date.
+[2024-08-11 09:04:21.584]	 Invoking /Users/johnson/.config/tmux/plugins/tpm/bin/clean_plugins all
+[2024-08-11 09:04:21.702]	 Done.
+
+[2024-08-11 09:15:06.280]	 List of discovered tpm plugins: <leader><C-s> tmux-plugins/tmux-cpu session copy keybindding easily theme
+[2024-08-11 09:15:06.324]	 Invoking /Users/johnson/.config/tmux/plugins/tpm/bin/install_plugins
+[2024-08-11 09:15:06.428]	 Installing "<leader><C-s>"
+[2024-08-11 09:15:06.429]	 Installing "session"
+[2024-08-11 09:15:06.429]	 Installing "copy"
+[2024-08-11 09:15:06.429]	 Installing "keybindding"
+[2024-08-11 09:15:06.432]	 Installing "easily"
+[2024-08-11 09:15:06.432]	 Installing "theme"
+[2024-08-11 09:15:06.459]	 Already installed "tmux-cpu"
+[2024-08-11 09:15:07.052]	   "easily" download fail
+[2024-08-11 09:15:07.076]	   "session" download fail
+[2024-08-11 09:15:07.082]	   "keybindding" download fail
+[2024-08-11 09:15:07.087]	   "copy" download fail
+[2024-08-11 09:15:07.144]	   "<leader><C-s>" download fail
+[2024-08-11 09:15:07.152]	   "theme" download fail
+[2024-08-11 09:15:07.191]	 Invoking /Users/johnson/.config/tmux/plugins/tpm/bin/update_plugins all
+[2024-08-11 09:15:07.240]	 Updating all plugins!
+[2024-08-11 09:15:07.241]	 
+[2024-08-11 09:15:08.502]	   "tmux-cpu" update success
+[2024-08-11 09:15:08.507]	     | Already up to date.
+[2024-08-11 09:15:08.537]	 Invoking /Users/johnson/.config/tmux/plugins/tpm/bin/clean_plugins all
+[2024-08-11 09:15:08.654]	 Done.
+
