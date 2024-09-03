@@ -1,0 +1,182 @@
+#!/bin/sh
+
+# function definition ------------------------------------------------------------
+version_ge() {
+	# Returns 0 (true) if the first version is greater than or equal to the second
+	# Uses sort -V to compare versions in a natural way
+	[ "$(printf '%s\n' "$1" "$2" | sort -V | head -n1)" = "$2" ]
+}
+# Function to install tmux plugins using TPM
+install_tmux_plugins() {
+	# Get the installed tmux version
+	TMUX_VERSION=$(tmux -V | awk '{print $2}')
+
+	# Check if tmux version is >= 3.4
+	if version_ge "$TMUX_VERSION" "3.4"; then
+		echo "tmux version $TMUX_VERSION is sufficient."
+	else
+		echo "tmux version $TMUX_VERSION is too old. Please install tmux version 3.4 or newer."
+		exit 1
+	fi
+	# Check if tmux is running
+	if
+		tmux info &
+		>/dev/null
+	then
+		echo "Installing tmux plugins in the current session..."
+		tmux run-shell "$HOME/.tmux/plugins/tpm/bin/install_plugins"
+	else
+		echo "Starting a temporary tmux session to install plugins..."
+		# Start a new session, install plugins, and then kill the session
+		tmux new-session -d -s temp_session
+		tmux run-shell "$HOME/.tmux/plugins/tpm/bin/install_plugins"
+		tmux kill-session -t temp_session
+	fi
+
+	if [[ "$(uname -s)" == "Linux" && -f /etc/lsb-release ]]; then
+		rm ~/.tmux.conf
+		ln -s ~/.config/tmux/tmux.conf.local ~/.tmux.conf
+	fi
+}
+
+# Function to install packages with apt on Ubuntu
+install_apt_packages() {
+	sudo apt update
+	sudo apt upgrade -y
+
+	# build tools for homebrew (or normal dev env)
+	sudo apt-get install build-essential procps curl file git
+
+	# Define the input file
+	input_file="~/.others/packages_ubun20.txt"
+
+	# Read the input file
+	while IFS= read -r line; do
+		# Check if we reached the first ---
+		if [[ "$line" == "---" && -z "$section" ]]; then
+			section="snap"
+			continue
+		fi
+
+		# Check if we reached the second ---
+		if [[ "$line" == "---" && "$section" == "snap" ]]; then
+			section="manual"
+			continue
+		fi
+
+		# Install with apt
+		if [[ -z "$section" ]]; then
+			echo "Installing $line with apt............................................................."
+			sudo apt-get install -y "$line"
+
+		# Install with snap
+		elif [[ "$section" == "snap" ]]; then
+			echo "Installing $line with snap............................................................"
+			sudo snap install "$line"
+
+		# Prompt the user for manual installation
+		elif [[ "$section" == "manual" ]]; then
+			echo "You need to manually install $line (e.g., using Homebrew or by building from source)."
+fi
+
+	done <"$input_file"
+
+}
+ubuntu_install_fonts() {
+	# Define the URL and the font installation directory
+	# check more fonts on https://www.nerdfonts.com/font-downloads
+	FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip"
+	FONT_DIR="$HOME/.local/share/fonts"
+
+	# Create the font directory if it doesn't exist
+	mkdir -p "$FONT_DIR"
+
+	# Check if a file starting with "Hack" does not exist in the directory
+	if ! ls "$FONT_DIR"/Hack* 1>/dev/null 2>&1; then
+		echo "No file starting with 'Hack' found in $FONT_DIR."
+
+		# Download the Hack Nerd Font
+		echo "Downloading Hack Nerd Font..."
+		wget -O /tmp/Hack.zip "$FONT_URL"
+
+		# Unzip the font into the font directory
+		echo "Installing Hack Nerd Font..."
+		unzip /tmp/Hack.zip -d "$FONT_DIR"
+
+		# Clean up the downloaded zip file
+		rm /tmp/Hack.zip
+
+	fi
+
+	# Refresh the font cache
+	echo "Refreshing font cache..."
+	fc-cache -fv
+	echo "Hack Nerd Font installed successfully!"
+}
+# Function to install packages with Homebrew on macOS
+install_brew_packages() {
+	if ! command -v brew &>/dev/null; then
+		echo "Homebrew is not installed. Installing Homebrew..."
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	fi
+
+    if [ -f "$HOME/.Brewfile" ]; then
+		echo "Updating homebrew bundle"
+		brew bundle --global
+	fi
+}
+
+
+## ---Software Installation--------------------------------------------------------------
+system_type=$(uname -s)
+
+if [ "$system_type" = "Darwin" ]; then
+	pkgm="brew"
+elif [[ "$system_type" == "Linux" && -f /etc/lsb-release ]]; then
+	if grep -q "Ubuntu" /etc/lsb-release; then
+		pkgm="apt"
+	fi
+else
+	echo "Unsupported OS."
+	exit 1
+fi
+
+echo "Using package manager: $pkgm"
+
+
+# Install packages based on the package manager
+if [[ "$pkgm" == "brew" ]]; then
+	install_brew_packages
+elif [[ "$pkgm" == "apt" ]]; then
+	install_apt_packages
+fi
+
+# install Oh-my-zsh first
+echo "Setting up Oh-My-ZSH"
+sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+mkdir -p ${ZSH_CUSTOM}/themes
+mkdir -p ${ZSH_CUSTOM}/plugins
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM}/themes/powerlevel10k
+git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
+git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git ${ZSH_CUSTOM}/plugins/fzf-zsh-plugin
+
+echo "Tmux install plugins (tpm)"
+mkdir -p ~/.tmux/plugins/tpm
+mkdir -p ~/tmux_logs # For tmux log store
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+install_tmux_plugins
+
+echo "Updating the yadm repo origin URL"
+yadm remote set-url origin "git@github.com:12jack21/dotfiles.git"
+
+# change default shell
+echo "Change default shell"
+chsh -s $(which zsh)
+
+
+## ---Afterward Notification------------------------------------------------------------------
+echo "Neovim: move to directory(~/.config/nvim), setup with the shell script inside. (Lazy.nvim)"
+echo "Pay attention to your locale language, font family and package version !!!"
+echo "---yadm bootstrap finished ------------------------------------------------------"

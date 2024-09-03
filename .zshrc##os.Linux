@@ -1,0 +1,277 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+# TODO
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+
+# If you come from bash you might have to change your $PATH.
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+export EDITOR="nvim"
+export TMUX_CONF="~/.config/tmux/tmux.conf"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+
+# ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+ZOXIDE_CMD_OVERRIDE="cd"
+# ZSH_THEME="spaceship"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+  git
+  ssh
+  aliases
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# Set up fzf key bindings and fuzzy completion
+# source <(fzf --zsh)
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.config/p10k.zsh ]] || source ~/.config/p10k.zsh
+
+# fzf fuzzy finder (the fzf-plugin will automatically find ~/.fzf.zsh) !!
+[ -f ~/.config/fzf-key-bindings.zsh ] && source ~/.config/fzf-key-bindings.zsh
+# [ -f ~/.config/fzf.zsh ] && source ~/.config/fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh  # use plugin instead
+# for autojump utility
+# source /usr/local/Cellar/autojump/22.5.3_3/share/autojump/autojump.zsh
+#source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+
+
+# ZSH_AUTOSUGGEST_HISTORY_IGNORE=*
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# proxy list
+alias ip='curl cip.cc'
+# open/close proxy
+alias setproxy="export https_proxy=http://127.0.0.1:7890;export http_proxy=http://127.0.0.1:7890;export all_proxy=socks5://127.0.0.1:7890;echo \"Set proxy successfully\" "
+alias unsetproxy="unset http_proxy;unset https_proxy;unset all_proxy;echo \"Unset proxy successfully\" " 
+# test network speed
+alias lip="curl cip.cc; curl ifconfig.me"
+
+# List of commands and their corresponding aliases
+typeset -A command_aliases
+command_aliases=(
+  ["ls"]="lsd"
+  ["cat"]="bat"
+  ["du"]="dust" # Disk related
+  ["df"]="duf"
+  ["gcc"]="gcc-12"
+  ["g++"]="g++-12"
+  # Add more commands and aliases as needed
+)
+
+# Iterate over keys in Zsh
+for cmd in "${(@k)command_aliases}"; do
+  if command -v "${command_aliases[$cmd]}" &> /dev/null; then
+    alias "$cmd=${command_aliases[$cmd]}"
+  fi
+done
+# use exa instead of ls, plugin can set this (deprecated)
+# alias ls="exa"
+
+alias catnp="bat --paging=never"
+alias ll='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
+alias fissh="~/Documents/fissh.sh"
+alias lg="lazygit"
+
+# compiler
+# alias gcc='gcc-12'
+# alias g++='g++-12'
+#alias gcc='clang'
+#alias g++='clang++'
+
+alias timeout="gtimeout"
+# alias bash="/usr/local/bin/bash"
+
+alias tensorboard="python -m tensorboard.main" 
+
+alias nerou="netstat -nr -f inet"
+# gateway here is easyconnect's gateway
+alias addsc="sudo route add -net 10.177.35.0/24 -gateway 10.162.128.1 -interface en0"
+alias delsc="sudo route delete 10.177.35.0"
+alias addsq="sudo route add -net 10.200.5.5/16 -iface ppp0"
+alias delsq="sudo route delete 10.200.5.5"
+alias adddef="sudo route add default 192.168.31.1 -interface en0"
+
+# neovim README synchronization (delete some preceding lines generated by obsidian)
+alias n="nvim"
+alias unvim="cp ~/Documents/OB_Notes/mdnotes/mynvim.md ~/.config/nvim/README.md && sed -i '' '1,7d' ~/.config/nvim/README.md"
+alias rnvim="rsync -rv ~/.config/nvim"
+alias rscp="rsync -Pv --rsh=ssh"
+alias rcp="rsync -az --info=progress2"
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('~/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="$HOME/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# export PATH="/Users/johnson/opt/anaconda3/bin:$PATH" 
+export PATH="$HOME/.local/bin:$PATH" 
+
+# teledrive
+export TG_API_ID=13861267
+TG_API_HASH=e37b11b6e1bffda9de000d3dc1137137
+
+export PATH="/usr/local/opt/node@14/bin:$PATH"
+export PATH="/usr/local/opt/node@16/bin:$PATH"
+
+# MIT6.S081 OSLab
+export PATH="/usr/local/opt/riscv-gnu-toolchain/bin:$PATH"
+
+# export OPENAI_API_KEY='api-wpcTocSdgq1gDVhBkwfmT3BlbkFJtoeUI4Tz6XAVRP7ZgMNz'
+export OPENAI_API_KEY='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'
+
+# LLVM
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include"
+
+export PATH="/usr/local/opt/curl/bin:$PATH"
+# test -e /Users/johnson/.iterm2_shell_integration.zsh && source /Users/johnson/.iterm2_shell_integration.zsh || true
+
+# for nnn terminal file manager to open file with tmux and neovim
+# export VISUAL="ewrap"
+# export TMUX="tmux"  # tmux will set this automatically when start running
+# configure nnn (terminal file manager) theme
+# BLK="04" CHR="04" DIR="04" EXE="00" REG="00" HARDLINK="00" SYMLINK="06" MISSING="00" ORPHAN="01" FIFO="0F" SOCK="0F" OTHER="02"
+# export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
+
+# flybook mirror for cargo (rust)
+export RUSTUP_DIST_SERVER="https://rsproxy.cn"
+export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
+
+# here the path to the ovr file
+GEOSTORE_OVR_FILE=file:///usr/local/Cellar/tomcat@8/8.5.95/libexec/conf/geostore-ovr.properties
+
+# add the env. variable 'geostore-ovr' to JAVA_OPTS
+JAVA_OPTS="-Dgeostore-ovr=$GEOSTORE_OVR_FILE "
+
+export MACOSX_DEPLOYMENT_TARGET=13.6
+
+# Golang config
+# Check if the 'go' command is available
+if command -v go &> /dev/null; then
+    go env -w GO111MODULE=on
+    go env -w GOPROXY=https://goproxy.cn
+    export GOPATH="$HOME/go"
+    export PATH="$GOPATH/bin:$PATH"
+fi
+
+# rebuild your completions cache
+# autoload -U compinit && compinit -u
+# rm -rf ~/.zcompdump*; compinit
+
+export LANG="zh_CN.UTF-8"
+export LANGUAGE="zh_CN:en"
+export LC_ALL="zh_CN.UTF-8"
