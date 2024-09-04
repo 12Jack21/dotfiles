@@ -184,6 +184,11 @@ alias lt='ls --tree'
 alias fissh="~/Documents/fissh.sh"
 alias lg="lazygit"
 
+# allow put back from Trash
+if command -v "trash" &> /dev/null; then
+    alias rm="trash -F"
+fi
+
 # compiler
 # alias gcc='gcc-12'
 # alias g++='g++-12'
