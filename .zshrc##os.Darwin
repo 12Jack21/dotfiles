@@ -164,6 +164,7 @@ command_aliases=(
   ["gcc"]="gcc-14"
   ["g++"]="g++-14"
   ["ps"]="procs"
+  ["mac"]="macchina"
   # Add more commands and aliases as needed
 )
 
@@ -309,6 +310,7 @@ fi
 # rebuild your completions cache
 # autoload -U compinit && compinit -u
 # rm -rf ~/.zcompdump*; compinit
+
 
 # Proper autocompletions
 autoload -Uz compinit

@@ -1,4 +1,5 @@
 {
+    "global": { "show_in_menu_bar": false },
     "profiles": [
         {
             "complex_modifications": {
@@ -106,6 +107,13 @@
                 {
                     "identifiers": {
                         "is_keyboard": true,
+                        "product_id": 34304,
+                        "vendor_id": 1452
+                    },
+                    "ignore": true
+                },
+                {
+                    "identifiers": {
                         "product_id": 34304,
                         "vendor_id": 1452
                     },
