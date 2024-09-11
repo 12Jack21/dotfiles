@@ -507,9 +507,9 @@ multiplier = 8
 save_to_clipboard = true
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
-[shell]
-args = ["-c", "~/.config/alacritty/alacritty_init.sh"]
-program = "/usr/local/bin/zsh"
+# [shell]
+# args = ["-c", "~/.config/alacritty/alacritty_init.sh"]
+# program = "/usr/local/bin/zsh"
 
 [window]
 blur = false

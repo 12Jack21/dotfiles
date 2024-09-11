@@ -33,7 +33,7 @@ check_and_start() {
     # echo "session count = $session_count\n"
 
     if [ $session_count -eq 0 ]; then
-        tmux new-session -A -s Core
+        tmux new-session -d -s Core
     fi
 
     if [ $core_exists -eq 0 ]; then
