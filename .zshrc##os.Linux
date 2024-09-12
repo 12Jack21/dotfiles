@@ -91,15 +91,17 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+fpath+="$HOME/.zsh_functions"
 
 # Set up fzf key bindings and fuzzy completion
-# source <(fzf --zsh)
+[[ ! -f ~/.fzf.zsh ]] || source <(fzf --zsh)
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.config/p10k.zsh ]] || source ~/.config/p10k.zsh
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
 
 # fzf fuzzy finder (the fzf-plugin will automatically find ~/.fzf.zsh) !!
-[ -f ~/.config/fzf-key-bindings.zsh ] && source ~/.config/fzf-key-bindings.zsh
 # [ -f ~/.config/fzf.zsh ] && source ~/.config/fzf.zsh
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -166,13 +168,24 @@ done
 # use exa instead of ls, plugin can set this (deprecated)
 # alias ls="exa"
 
-alias catnp="bat --paging=never"
+alias catp="bat"
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
 alias fissh="~/Documents/fissh.sh"
 alias lg="lazygit"
+
+# allow put back from Trash
+if command -v "bat" &> /dev/null; then
+    alias cat="bat --paging=never -p"
+fi
+
+if command -v "trash" &> /dev/null; then
+    alias rm="trash -F"
+fi
+
+
 
 # compiler
 # alias gcc='gcc-12'
@@ -215,6 +228,20 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba init' !!
+export MAMBA_EXE='/usr/local/opt/micromamba/bin/micromamba';
+export MAMBA_ROOT_PREFIX='/Users/johnson/micromamba';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+    # alias mb="$MAMBA_EXE"  # Fallback on help from mamba activate
+fi
+unset __mamba_setup
+alias ma="micromamba"
 
 # export PATH="/Users/johnson/opt/anaconda3/bin:$PATH" 
 export PATH="$HOME/.local/bin:$PATH" 
@@ -275,3 +302,8 @@ fi
 export LANG="zh_CN.UTF-8"
 export LANGUAGE="zh_CN:en"
 export LC_ALL="zh_CN.UTF-8"
+
+
+# Proper autocompletions
+autoload -Uz compinit
+compinit

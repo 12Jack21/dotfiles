@@ -33,7 +33,7 @@ install_tmux_plugins() {
 		tmux kill-session -t temp_session
 	fi
 
-	if [[ "$(uname -s)" == "Linux" && -f /etc/lsb-release ]]; then
+	if [ "$(uname -s)" = "Linux" ] && [ -f /etc/lsb-release ]; then
 		rm ~/.tmux.conf
 		ln -s ~/.config/tmux/tmux.conf.local ~/.tmux.conf
 	fi
@@ -48,34 +48,34 @@ install_apt_packages() {
 	sudo apt-get install build-essential procps curl file git
 
 	# Define the input file
-	input_file="~/.others/packages_ubun20.txt"
+	input_file="$HOME/.others/packages_ubun20.txt"
 
 	# Read the input file
 	while IFS= read -r line; do
 		# Check if we reached the first ---
-		if [[ "$line" == "---" && -z "$section" ]]; then
+		if [ "$line" = "---" ] && [ -z "$section" ]; then
 			section="snap"
 			continue
 		fi
 
 		# Check if we reached the second ---
-		if [[ "$line" == "---" && "$section" == "snap" ]]; then
+		if [ "$line" = "---" ] && [ "$section" = "snap" ]; then
 			section="manual"
 			continue
 		fi
 
 		# Install with apt
-		if [[ -z "$section" ]]; then
+		if [ -z "$section" ]; then
 			echo "Installing $line with apt............................................................."
 			sudo apt-get install -y "$line"
 
 		# Install with snap
-		elif [[ "$section" == "snap" ]]; then
+		elif command -v snap &>/dev/null && [ "$section" = "snap" ] ; then
 			echo "Installing $line with snap............................................................"
 			sudo snap install "$line"
 
 		# Prompt the user for manual installation
-		elif [[ "$section" == "manual" ]]; then
+		elif [ "$section" = "manual" ]; then
 			echo "You need to manually install $line (e.g., using Homebrew or by building from source)."
 fi
 
@@ -131,23 +131,32 @@ install_brew_packages() {
 system_type=$(uname -s)
 
 if [ "$system_type" = "Darwin" ]; then
-	pkgm="brew"
-elif [[ "$system_type" == "Linux" && -f /etc/lsb-release ]]; then
-	if grep -q "Ubuntu" /etc/lsb-release; then
-		pkgm="apt"
-	fi
+    pkgm="brew"
+elif [ "$system_type" = "Linux" ]; then
+    # Check if lsb_release is available
+    if command -v lsb_release >/dev/null 2>&1; then
+        if [ "$(lsb_release -si)" = "Ubuntu" ]; then
+            pkgm="apt"
+        else
+            echo "Unsupported Linux distribution."
+            exit 1
+        fi
+    else
+        echo "lsb_release command not found. Cannot determine Linux distribution."
+        exit 1
+    fi
 else
-	echo "Unsupported OS."
-	exit 1
+    echo "Unsupported OS."
+    exit 1
 fi
 
 echo "Using package manager: $pkgm"
 
 
 # Install packages based on the package manager
-if [[ "$pkgm" == "brew" ]]; then
+if [ "$pkgm" = "brew" ]; then
 	install_brew_packages
-elif [[ "$pkgm" == "apt" ]]; then
+elif [ "$pkgm" = "apt" ]; then
 	install_apt_packages
 fi
 
