@@ -1,5 +1,6 @@
 #!/bin/sh
 
+GITHUB_DOMAIN="githubfast.com" # default: github.com
 # function definition ------------------------------------------------------------
 version_ge() {
 	# Returns 0 (true) if the first version is greater than or equal to the second
@@ -85,7 +86,7 @@ fi
 ubuntu_install_fonts() {
 	# Define the URL and the font installation directory
 	# check more fonts on https://www.nerdfonts.com/font-downloads
-	FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip"
+	FONT_URL="https://$GITHUB_DOMAIN/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip"
 	FONT_DIR="$HOME/.local/share/fonts"
 
 	# Create the font directory if it doesn't exist
@@ -158,6 +159,7 @@ if [ "$pkgm" = "brew" ]; then
 	install_brew_packages
 elif [ "$pkgm" = "apt" ]; then
 	install_apt_packages
+    ubuntu_install_fonts
 fi
 
 # install Oh-my-zsh first
@@ -166,15 +168,15 @@ sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools
 ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 mkdir -p ${ZSH_CUSTOM}/themes
 mkdir -p ${ZSH_CUSTOM}/plugins
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM}/themes/powerlevel10k
-git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
-git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git ${ZSH_CUSTOM}/plugins/fzf-zsh-plugin
+git clone --depth=1 https://$GITHUB_DOMAIN/romkatv/powerlevel10k.git ${ZSH_CUSTOM}/themes/powerlevel10k
+git clone https://$GITHUB_DOMAIN/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
+git clone https://$GITHUB_DOMAIN/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
+git clone --depth 1 https://$GITHUB_DOMAIN/unixorn/fzf-zsh-plugin.git ${ZSH_CUSTOM}/plugins/fzf-zsh-plugin
 
 echo "Tmux install plugins (tpm)"
 mkdir -p ~/.tmux/plugins/tpm
 mkdir -p ~/tmux_logs # For tmux log store
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://$GITHUB_DOMAIN/tmux-plugins/tpm ~/.tmux/plugins/tpm
 install_tmux_plugins
 
 echo "Updating the yadm repo origin URL"
